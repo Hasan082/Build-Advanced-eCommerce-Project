@@ -129,7 +129,8 @@ STATIC_URL = '/media/'
 STATIC_ROOT = BASE_DIR / 'media'
 
 
-
+# Append slash to URLs
+APPEND_SLASH = True
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
