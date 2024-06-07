@@ -35,11 +35,12 @@
 			<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
 				<i class="fa fa-bars"></i> All category
 			</button>
-			<div class="dropdown-menu">
+			<ul class="dropdown-menu">
+				<li><a class="dropdown-item" href="{% url 'store' %}"> All Products</a></li>
 				{% for cat in cat_links %}
 					<li><a class="dropdown-item" href="{{ cat.get_slug }}">{{ cat.name }}</a></li>
 				{% endfor %}
-			</div>
+			</ul>
 		</div>  <!-- category-wrap.// -->
 	</div> <!-- col.// -->
 	<a href="{% url 'store' %}" class="btn btn-outline-primary">Store</a>
