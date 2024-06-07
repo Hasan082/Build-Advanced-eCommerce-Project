@@ -14,3 +14,7 @@ def store_view(request, category_slug=None):
 
     context = {'products': products}
     return render(request, 'store.html', context)
+
+
+def details_view(request, category_slug, product_slug):
+    return render(request, 'products_details.html')
