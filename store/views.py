@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 
 from carts.models import cartItem
@@ -42,3 +43,14 @@ def details_view(request, category_slug, product_slug):
         'in_cart': in_cart
     }
     return render(request, 'products_details.html', context)
+
+
+def search(request):
+    if 'query' in request.GET:
+        query = request.GET['query']
+        if query:
+            products = Product.objects.order_by('-created_at').filter(prod_name__icontains=query)
+    context = {
+        'products': products
+    }
+    return render(request, 'store.html', context)
