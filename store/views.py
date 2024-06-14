@@ -13,9 +13,12 @@ def store_view(request, category_slug=None):
     if category_slug is not None:
         category = get_object_or_404(Category, slug=category_slug)
         products = Product.objects.filter(category=category, is_available=True)
+        paginator = Paginator(products, 1)
+        page = request.GET.get('page')
+        products_per_page = paginator.get_page(page)
     else:
         products = Product.objects.all().filter(is_available=True)
-        paginator = Paginator(products, 3)
+        paginator = Paginator(products, 8)
         page = request.GET.get('page')
         products_per_page = paginator.get_page(page)
 
