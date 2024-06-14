@@ -50,6 +50,8 @@ def search(request):
         query = request.GET['query']
         if query:
             products = Product.objects.order_by('-created_at').filter(prod_name__icontains=query)
+        else:
+            products = Product.objects.order_by('-created_at')
     context = {
         'products': products
     }
