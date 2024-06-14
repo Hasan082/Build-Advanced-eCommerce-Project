@@ -17,8 +17,8 @@ def store_view(request, category_slug=None):
         page = request.GET.get('page')
         products_per_page = paginator.get_page(page)
     else:
-        products = Product.objects.all().filter(is_available=True)
-        paginator = Paginator(products, 4)
+        products = Product.objects.all().filter(is_available=True).order_by('id')
+        paginator = Paginator(products, 3)
         page = request.GET.get('page')
         products_per_page = paginator.get_page(page)
 
