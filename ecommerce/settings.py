@@ -126,10 +126,9 @@ STATICFILES_DIRS = [
     'ecommerce/static',
 ]
 
-# Media file configuration here
-STATIC_URL = '/media/'
-STATIC_ROOT = BASE_DIR / 'media'
-
+# Media files configuration
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Append slash to URLs
 APPEND_SLASH = True
