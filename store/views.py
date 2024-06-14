@@ -4,6 +4,7 @@ from carts.models import cartItem
 from category.models import Category
 from .models import Product
 from carts.views import _cart_id
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def store_view(request, category_slug=None):
@@ -14,8 +15,11 @@ def store_view(request, category_slug=None):
         products = Product.objects.filter(category=category, is_available=True)
     else:
         products = Product.objects.all().filter(is_available=True)
+        paginator = Paginator(products, 3)
+        page = request.GET.get('page')
+        products_per_page = paginator.get_page(page)
 
-    context = {'products': products}
+    context = {'products': products_per_page}
     return render(request, 'store.html', context)
 
 
