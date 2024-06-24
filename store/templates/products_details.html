@@ -18,7 +18,8 @@
                     </article> <!-- gallery-wrap .end// -->
                 </aside>
                 <main class="col-md-6 border-left">
-                    <form action="{% url 'add_cart' single_product.id %}" method="GET">
+                    <form action="{% url 'add_cart' single_product.id %}" method="POST">
+                        {% csrf_token %}
                         <article class="content-body">
 
                             <h2 class="title">{{ single_product.prod_name }}</h2>
@@ -33,11 +34,12 @@
                             <div class="row">
                                 <div class="item-option-select">
                                     <h6>Choose Color</h6>
-                                    <select name="color" class="form-control form-select-sm" aria-label="">
-                                        <option value="">Choose your color</option>
-                                        <option value="red">Red</option>
-                                        <option value="yellow">Yellow</option>
-                                        <option value="green">Green</option>
+                                    <select name="color" class="form-control form-select-sm" aria-label="" required>
+                                        <option value="">Select color</option>
+                                        {% for variation in single_product.variation_set.colors %}
+                                        <option value="{{ variation.variation_value | lower }}">
+                                            {{ variation.variation_value | capfirst }} </option>
+                                        {% endfor %}
                                     </select>
                                 </div>
                             </div> <!-- row.// -->
@@ -45,10 +47,11 @@
                                 <div class="item-option-select">
                                     <h6>Select Size</h6>
                                     <select name="size" class="form-control form-select-sm" aria-label="">
-                                        <option value="">Choose your size</option>
-                                        <option value="small">Small</option>
-                                        <option value="medium">Medium</option>
-                                        <option value="large">Large</option>
+                                        <option value="">Select size</option>
+                                        {% for variation in single_product.variation_set.sizes %}
+                                        <option value="{{ variation.variation_value | lower }}">
+                                            {{ variation.variation_value | capfirst }} </option>
+                                        {% endfor %}
                                     </select>
                                 </div>
                             </div> <!-- row.// -->

@@ -12,9 +12,9 @@ def _cart_id(request):
 
 
 def add_cart(request, product_id):
-    color = request.GET.get('color')
-    size = request.GET.get('size')
-    print(color, size)
+    if request.method == 'POST':
+        color = request.POST.get('color')
+        size = request.POST.get('size')
     product = get_object_or_404(Product, id=product_id)  # Retrieve the product
 
     try:
@@ -71,7 +71,7 @@ def cart_home(request, total=0, quantity=0, cart_items=None):
         tax = (2 * total) / 100
         grand_total = total + tax
     except ObjectDoesNotExist:
-        pass  # just ignore
+        pass
 
     context = {
         'total': total,
