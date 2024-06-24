@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 
@@ -49,10 +50,15 @@ def search(request):
     if 'query' in request.GET:
         query = request.GET['query']
         if query:
-            products = Product.objects.order_by('-created_at').filter(prod_name__icontains=query)
+            products = Product.objects.order_by('-created_at').filter(
+                Q(prod_name__icontains=query) | Q(description__icontains=query)
+            )
+            product_count = products.count()
         else:
             products = Product.objects.order_by('-created_at')
+            product_count = products.count()
     context = {
-        'products': products
+        'products': products,
+        'product_count': product_count
     }
     return render(request, 'store.html', context)
