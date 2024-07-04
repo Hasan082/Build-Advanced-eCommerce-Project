@@ -111,4 +111,4 @@ class Variation(models.Model):
         Returns:
             str: The category of the variation ('color' or 'size').
         """
-        return self.variation_category
+        return self.variation_value
