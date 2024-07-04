@@ -51,10 +51,18 @@ def add_cart(request, product_id):
 
     try:
         cart_item = cartItem.objects.get(product=product, cart=cart)
+        cart_item.variations.clear()
+        if len(product_variations) > 0:
+            for item in product_variations:
+                cart_item.variations.add(item)
         cart_item.quantity += 1
         cart_item.save()
     except cartItem.DoesNotExist:
         cart_item = cartItem.objects.create(product=product, quantity=1, cart=cart)
+        if len(product_variations) > 0:
+            cart_item.variations.clear()
+            for item in product_variations:
+                cart_item.variations.add(item)
     cart_item.save()
 
     return redirect('cart_home')
