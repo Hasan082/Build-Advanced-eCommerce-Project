@@ -8,7 +8,7 @@ class AccountAdmin(UserAdmin):
     # `list_display` specifies the fields to display in the admin list view.
     # This makes it easier to see key information about each account at a glance.
     list_display = (
-    'id', 'email', 'first_name', 'last_name', 'username', 'phone', 'last_login', 'date_joined', 'is_active')
+        'id', 'email', 'first_name', 'last_name', 'username', 'phone', 'last_login', 'date_joined', 'is_active')
 
     # `list_display_links` determines which fields in the `list_display` are clickable,
     # allowing you to navigate to the detail page of an account by clicking on these fields.
