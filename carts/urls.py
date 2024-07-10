@@ -17,7 +17,7 @@ urlpatterns = [
     # '<int:product_id>' part captures the product ID as an integer and passes it to the 'remove_cart' view as a
     # parameter. The name 'remove_cart' can be used to reference this URL pattern in templates and views.
 
-    path('delete_cart/<int:product_id>/', views.delete_cart, name='delete_cart'),
+    path('delete_cart/<int:product_id>/<int:cart_item_id>/', views.delete_cart, name='delete_cart'),
     # The 'delete_cart/<int:product_id>/' pattern matches URLs like 'delete_cart/1/' where '1' is a product ID. The
     # '<int:product_id>' part captures the product ID as an integer and passes it to the 'delete_cart' view as a
     # parameter. The name 'delete_cart' can be used to reference this URL pattern in templates and views.

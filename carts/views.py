@@ -113,7 +113,7 @@ def remove_cart(request, product_id, cart_item_id):
     return redirect('cart_home')
 
 
-def delete_cart(request, product_id):
+def delete_cart(request, product_id, cart_item_id):
     """
     Deletes a product from the cart, regardless of the quantity.
 
@@ -126,7 +126,7 @@ def delete_cart(request, product_id):
     """
     product = get_object_or_404(Product, id=product_id)
     cart = Cart.objects.get(cart_id=_cart_id(request))
-    cart_item = get_object_or_404(cartItem, product=product, cart=cart)
+    cart_item = get_object_or_404(cartItem, product=product, cart=cart, id=cart_item_id)
     cart_item.delete()
 
     return redirect('cart_home')
