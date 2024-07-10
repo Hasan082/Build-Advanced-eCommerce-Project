@@ -1,4 +1,5 @@
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from carts.models import Cart, cartItem
 from store.models import Product, Variation
@@ -49,21 +50,36 @@ def add_cart(request, product_id):
         cart = Cart.objects.create(cart_id=_cart_id(request))
     cart.save()
 
-    try:
-        cart_item = cartItem.objects.get(product=product, cart=cart)
-        cart_item.variations.clear()
-        if len(product_variations) > 0:
-            for item in product_variations:
-                cart_item.variations.add(item)
-        cart_item.quantity += 1
-        cart_item.save()
-    except cartItem.DoesNotExist:
+    is_cart_exist = cartItem.objects.filter(cart=cart, product=product).exists()
+    if is_cart_exist:
+        cart_item = cartItem.objects.filter(product=product, cart=cart)
+        exist_var_list = []
+        id = []
+        for item in cart_item:
+            existing_variation = item.variations.all()
+            exist_var_list.append(list(existing_variation))
+            id.append(item.id)
+
+        print(exist_var_list)
+
+        if product_variations in exist_var_list:
+            index = exist_var_list.index(product_variations)
+            item_id = id[index]
+            item = cartItem.objects.get(product=product, id=item_id)
+            item.quantity += 1
+            item.save()
+        else:
+            if len(product_variations) > 0:
+                cart_item.variations.clear()
+                for item in product_variations:
+                    cart_item.variations.add(item)
+            cart_item.save()
+    else:
         cart_item = cartItem.objects.create(product=product, quantity=1, cart=cart)
         if len(product_variations) > 0:
             cart_item.variations.clear()
-            for item in product_variations:
-                cart_item.variations.add(item)
-    cart_item.save()
+            cart_item.variations.add(*product_variations)
+        cart_item.save()
 
     return redirect('cart_home')
 
