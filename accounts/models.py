@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
+from ecommerce import settings
+
 
 # MyUserManager class is a custom user manager for creating regular and superuser accounts.
 class MyUserManager(BaseUserManager):
@@ -88,3 +90,4 @@ class Account(AbstractBaseUser):
     # Custom method to check if the user has permissions to access the app.
     def has_module_perms(self, app_label):
         return True  # By default, return True indicating access to any app.
+
