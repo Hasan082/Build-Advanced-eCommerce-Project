@@ -49,13 +49,7 @@
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-block"> Register</button>
                 </div> <!-- form-group// -->
-                {% if messages %}
-                  {% for message in messages %}
-                    <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-danger{% endif %}" role="alert">
-                      {{ message }}
-                    </div>
-                  {% endfor %}
-                {% endif %}
+                {% include "includes/alert.html" %}
             </form>
         </article><!-- card-body.// -->
     </div> <!-- card .// -->
