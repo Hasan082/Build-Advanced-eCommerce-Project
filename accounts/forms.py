@@ -3,6 +3,8 @@ from .models import Account
 
 
 class RegistrationForm(forms.ModelForm):
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'password'}))
     confirm_password = forms.CharField(
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirm password'}))
 
@@ -17,7 +19,6 @@ class RegistrationForm(forms.ModelForm):
             'last_name': 'Last Name',
             'email': 'Email',
             'phone': 'Phone',
-            'password': 'Password'
         }
         for field in self.fields:
             self.fields[field].widget.attrs.update({'class': 'form-control'})
