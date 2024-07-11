@@ -61,8 +61,6 @@ def add_cart(request, product_id):
             exist_var_list.append(list(existing_variation))
             id.append(item.id)
 
-        print(exist_var_list)
-
         if product_variations in exist_var_list:
             index = exist_var_list.index(product_variations)
             item_id = id[index]
@@ -146,6 +144,8 @@ def cart_home(request, total=0, quantity=0, cart_items=None):
     Returns:
         HttpResponse: Renders the cart page with the cart context.
     """
+    tax = 0
+    grand_total = 0
     try:
         cart = Cart.objects.get(cart_id=_cart_id(request))
         cart_items = cartItem.objects.filter(cart=cart, is_active=True)
