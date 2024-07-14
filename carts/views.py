@@ -32,7 +32,7 @@ def add_cart(request, product_id):
     Returns:
         HttpResponse: Redirects to the cart home page.
     """
-    product = get_object_or_404(Product, id=product_id)  # Retrieve the product
+    product = get_object_or_404(Product, id=product_id)
     product_variations = []
     if request.method == 'POST':
         for item in request.POST:
@@ -49,6 +49,7 @@ def add_cart(request, product_id):
         cart = Cart.objects.get(cart_id=_cart_id(request))
     except Cart.DoesNotExist:
         cart = Cart.objects.create(cart_id=_cart_id(request))
+
     cart.save()
 
     is_cart_exist = cartItem.objects.filter(cart=cart, product=product).exists()

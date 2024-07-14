@@ -68,7 +68,12 @@ $(document).ready(function () {
         emoji = '🌙'; // Crescent moon emoji
     }
     $('#greetings').text(`${greeting} ${emoji}`);
+
     //DYNAMIC GREETING MESSAGE END========================
+    setTimeout(function () {
+        $(".alert").alert('close')
+    }, 5000);
+
 
 });
 // jquery end
