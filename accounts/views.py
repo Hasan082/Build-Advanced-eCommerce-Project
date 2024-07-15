@@ -58,8 +58,8 @@ def register(request):
             send_email = EmailMessage('Activate your account.', body=email_message, to=[email])
             send_email.send()
 
-            messages.success(request, 'Registration successful.')
-            return redirect('register')
+            # messages.success(request, 'Registration successful.')
+            return redirect('/accounts/login/?command=verification&email='+email)
         else:
             for field, errors in form.errors.items():
                 for error in errors:
