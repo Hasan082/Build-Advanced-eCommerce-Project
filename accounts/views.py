@@ -1,5 +1,12 @@
-from django.contrib import messages,auth
+from django.core.mail import EmailMessage
+from django.contrib import messages, auth
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.sites.shortcuts import get_current_site
 from django.shortcuts import render, redirect
+from django.template.loader import render_to_string
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+
 from .forms import RegistrationForm
 from .models import Account
 from django.contrib.auth.decorators import login_required
@@ -39,6 +46,18 @@ def register(request):
             )
             user.phone_number = phone
             user.save()
+
+            # SEND ACCOUNT VERIFICATION EMAIL
+            current_site = get_current_site(request)
+            email_message = render_to_string("account_activation_email.html", {
+                'user': user,
+                'domain': current_site,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token': default_token_generator.make_token(user)
+            })
+            send_email = EmailMessage('Activate your account.', body=email_message, to=[email])
+            send_email.send()
+
             messages.success(request, 'Registration successful.')
             return redirect('register')
         else:
@@ -69,8 +88,13 @@ def login(request):
     return render(request, 'login.html')
 
 
-@login_required(login_url= "login")
+@login_required(login_url="login")
 def logout(request):
     auth.logout(request)
     messages.success(request, 'Logged out successfully.')
     return redirect('login')
+
+
+# ToDO , need to do account activation part
+def activate(request):
+    return

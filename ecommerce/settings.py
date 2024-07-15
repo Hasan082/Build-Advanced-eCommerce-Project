@@ -11,9 +11,15 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import json
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+env_path = BASE_DIR / 'env.json'
+with open(env_path) as env_file:
+    env_var = json.load(env_file)
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -26,7 +32,6 @@ SECRET_KEY = 'django-insecure-+1@56)62o%)#6fe8hz%5x4vbmn#y@26p5l#ot01k%1+@w*kib$
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -86,7 +91,6 @@ DATABASES = {
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -105,7 +109,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -116,7 +119,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -139,3 +141,16 @@ APPEND_SLASH = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# LOGIN
+
+LOGIN_URL = 'login'
+
+# EMAIL SETTINGS
+EMAIL_BACKEND = env_var["EMAIL_BACKEND"]
+EMAIL_HOST = env_var["EMAIL_HOST"]
+EMAIL_PORT = env_var["EMAIL_PORT"]
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = env_var["EMAIL_HOST_USER"]
+EMAIL_HOST_PASSWORD = env_var["EMAIL_HOST_PASSWORD"]
+
+print(EMAIL_HOST_PASSWORD)
