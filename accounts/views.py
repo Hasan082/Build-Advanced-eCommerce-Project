@@ -81,14 +81,15 @@ def login(request):
 
         if user is not None:
             auth.login(request, user)
-            return redirect('index')
+            messages.success(request, 'You are now logged in.')
+            return redirect('dashboard')
         else:
             messages.error(request, 'Invalid email or password.')
             return redirect('login')
     return render(request, 'login.html')
 
 
-@login_required(login_url="login")
+@login_required
 def logout(request):
     auth.logout(request)
     messages.success(request, 'Logged out successfully.')
@@ -110,3 +111,8 @@ def activate(request, uidb64, token):
     else:
         messages.error(request, 'Activation link is invalid!')
         return redirect('register')
+
+
+@login_required
+def dashboard(request):
+    return render(request, 'dashboard.html')

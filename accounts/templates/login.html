@@ -10,7 +10,7 @@
 <section class="section-conten padding-y" style="min-height:84vh">
     {% if request.GET.command == "verification" %}
         <div class="alert-info p-4 p-sm-3 text-center m-auto" style="max-width: 700px; margin-top:50px;">
-            <p>Thanks for registering with us. We have sent a verification email to your {{ request.GET.email }}. Please verify your email to activate your account.</p>
+            <p>Thanks for registering with us. We have sent a verification email to your email address {{ request.GET.email }}. Please verify your email to activate your account.</p>
             <p>IF you already verified, Please <a href="{% url 'login'%}">Log in</a></p>
         </div>
     {% else %}
@@ -34,6 +34,7 @@
           <div class="form-group">
               <button type="submit" class="btn btn-primary btn-block"> Login  </button>
           </div> <!-- form-group// -->
+          {% include "includes/alert.html" %}
       </form>
       </div> <!-- card-body.// -->
     </div> <!-- card .// -->
