@@ -1,6 +1,5 @@
-from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-from ecommerce import settings
+from django.db import models
 
 
 # MyUserManager class is a custom user manager for creating regular and superuser accounts.
@@ -66,7 +65,7 @@ class Account(AbstractBaseUser):
     last_login = models.DateTimeField(auto_now=True)  # Date and time of the last login. Updates on each login.
     is_admin = models.BooleanField(default=False)  # Flag indicating if the user has admin rights.
     is_staff = models.BooleanField(default=False)  # Flag indicating if the user is a staff member.
-    is_active = models.BooleanField(default=True)  # Flag indicating if the user's account is active.
+    is_active = models.BooleanField(default=False)  # Flag indicating if the user's account is active.
     is_superuser = models.BooleanField(default=False)  # Flag indicating if the user is a superuser.
 
     # Defines the field used as the unique identifier for the user during authentication.
